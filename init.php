@@ -28,9 +28,9 @@ function qms4_add_theme_thumbnails()
 new QMS4\Coodinator\AdminPageCoodinator();
 new QMS4\Coodinator\CustomBlockCoodinator();
 new QMS4\Coodinator\FormatTypeCoodinator();
-new QMS4\Coodinator\Qms4PostTypeCoodinator();
 new QMS4\Coodinator\PostTyepsCoodinator();
 new QMS4\Coodinator\PostMetaCoodinator();
+new QMS4\Coodinator\Qms4PostTypeCoodinator();
 new QMS4\Coodinator\RoleCapabilityCoodinator();
 new QMS4\Coodinator\ColumnsCoodinator();
 new QMS4\Coodinator\RestApiCoodinator();

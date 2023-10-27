@@ -4,6 +4,7 @@ namespace QMS4\PostTypeMeta;
 
 use QMS4\PostTypeMeta\PostTypeMetaInterface;
 use QMS4\TaxonomyMeta\TaxonomyMeta;
+use QMS4\TaxonomyMeta\TaxonomyMetaFactory;
 
 
 class PostTypeMeta implements PostTypeMetaInterface
@@ -210,16 +211,9 @@ class PostTypeMeta implements PostTypeMetaInterface
 	{
 		if ( isset( $this->cache[ 'taxonomies' ] ) ) { return $this->cache[ 'taxonomies' ]; }
 
-		if ( ! function_exists( 'get_field' ) ) { return array(); }
+		$factory = new TaxonomyMetaFactory();
 
-		$rows = get_field( 'qms4__post_type__taxonomies', $this->wp_post->ID );
-
-		$taxonomies = array();
-		foreach ( $rows ?: array() as $row ) {
-			$taxonomies[] = TaxonomyMeta::from_array( $this->name(), $row );
-		}
-
-		return $this->cache[ 'taxonomies' ] = $taxonomies;
+		return $this->cache[ 'taxonomies' ] = $factory->from_post_type( $this->name() );
 	}
 
 	/**

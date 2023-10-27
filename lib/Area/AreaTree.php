@@ -2,20 +2,38 @@
 
 namespace QMS4\Area;
 
-use QMS4\PostForest\PostForest;
-
 
 class AreaTree implements \IteratorAggregate
 {
-	/** @var    PostForest */
-	private $post_forest;
+	/** @var    \WP_Post[] */
+	private $wp_posts;
+
+	/** @var    array<int,AreaTree> */
+	private $sub_trees;
+
+	/** @var    array<int,array> */
+	private $child_ids_dict;
+
+	/** @var    int */
+	private $depth;
 
 	/**
-	 * @param    PostForest    $post_forest
+	 * @param    \WP_Post[]    $wp_posts
+	 * @param    array<int,AreaTree>    $sub_trees
+	 * @param    int[]    $child_ids
+	 * @param    int    $depth
 	 */
-	public function __construct( PostForest $post_forest )
+	public function __construct(
+		array $wp_posts,
+		array $sub_trees,
+		array $child_ids_dict,
+		int $depth
+	)
 	{
-		$this->post_forest = $post_forest;
+		$this->wp_posts = $wp_posts;
+		$this->sub_trees = $sub_trees;
+		$this->child_ids_dict = $child_ids_dict;
+		$this->depth = $depth;
 	}
 
 	// ====================================================================== //
@@ -25,11 +43,9 @@ class AreaTree implements \IteratorAggregate
 	 */
 	public function getIterator(): \Traversable
 	{
-		foreach ( $this->post_forest as $post_tree ) {
-			yield array(
-				$post_tree->wp_post(),
-				new self( $post_tree->sub_forest() ),
-			);
+		foreach ( $this->wp_posts as $wp_post ) {
+			$sub_tree = $this->sub_trees[ $wp_post->ID ];
+			yield array( $wp_post, $sub_tree );
 		}
 	}
 
@@ -40,7 +56,15 @@ class AreaTree implements \IteratorAggregate
 	 */
 	public function is_empty(): bool
 	{
-		return $this->post_forest->is_empty();
+		return empty( $this->wp_posts );
+	}
+
+	/**
+	 * @return    int[]
+	 */
+	public function child_ids( int $post_id ): array
+	{
+		return $this->child_ids_dict[ $post_id ];
 	}
 
 	/**
@@ -48,15 +72,6 @@ class AreaTree implements \IteratorAggregate
 	 */
 	public function depth(): int
 	{
-		$length = array();
-		foreach ( $this->post_forest as $post_tree ) {
-			$length[] = $post_tree->field( 'length' );
-		}
-
-		switch ( count( $length ) ) {
-			case 0: return 0;
-			case 1: return $length[ 0 ];
-			default: return max( $length );
-		}
+		return $this->depth;
 	}
 }

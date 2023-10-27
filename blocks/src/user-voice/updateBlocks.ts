@@ -38,9 +38,14 @@ export function toLayoutNone( blocks: BlockInstance[] ) {
 }
 
 export function toLayoutImage( blocks: BlockInstance[] ) {
+	// console.log( { blocks } );
+
 	const heading = find( 'core/heading', blocks ) ?? defaultHeading();
+	const media = find( 'qms4/user-voice-media', blocks ) ?? defaultContent();
 	const content =
 		find( 'qms4/user-voice-content', blocks ) ?? defaultContent();
+
+	console.log( { media } );
 
 	return [
 		heading,
@@ -52,13 +57,15 @@ export function toLayoutImage( blocks: BlockInstance[] ) {
 					width: '33.33%',
 				},
 				[
-					createBlock( 'qms4/user-voice-media', {
-						className: className(
-							'qms4__block__user-voice__media',
-							'qms4__block__user-voice__media--type-image'
-						),
-						type: 'image',
-					} ),
+					media.attributes.type === 'image'
+						? media
+						: createBlock( 'qms4/user-voice-media', {
+								className: className(
+									'qms4__block__user-voice__media',
+									'qms4__block__user-voice__media--type-image'
+								),
+								type: 'image',
+						  } ),
 				]
 			),
 			createBlock(
@@ -75,6 +82,7 @@ export function toLayoutImage( blocks: BlockInstance[] ) {
 
 export function toLayoutEmbed( blocks: BlockInstance[] ) {
 	const heading = find( 'core/heading', blocks ) ?? defaultHeading();
+	const media = find( 'qms4/user-voice-media', blocks ) ?? defaultContent();
 	const content =
 		find( 'qms4/user-voice-content', blocks ) ?? defaultContent();
 
@@ -88,13 +96,15 @@ export function toLayoutEmbed( blocks: BlockInstance[] ) {
 					width: '33.33%',
 				},
 				[
-					createBlock( 'qms4/user-voice-media', {
-						className: className(
-							'qms4__block__user-voice__media',
-							'qms4__block__user-voice__media--type-embed'
-						),
-						type: 'embed',
-					} ),
+					media.attributes.type === 'embed'
+						? media
+						: createBlock( 'qms4/user-voice-media', {
+								className: className(
+									'qms4__block__user-voice__media',
+									'qms4__block__user-voice__media--type-embed'
+								),
+								type: 'embed',
+						  } ),
 				]
 			),
 			createBlock(

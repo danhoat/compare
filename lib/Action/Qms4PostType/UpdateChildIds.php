@@ -22,7 +22,6 @@ class UpdateChildIds
 
 	private function update( AreaTree $area_tree ): void
 	{
-
 		foreach ( $area_tree as list( $wp_post, $sub_tree ) ) {
 			$child_ids = $area_tree->child_ids( $wp_post->ID );
 			AreaChildIds::update_post_meta( $wp_post->ID, $child_ids );

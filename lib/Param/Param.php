@@ -88,7 +88,7 @@ class Param implements \ArrayAccess, \IteratorAggregate
 	 * @param    int|string    $offset
 	 * @return    mixed
 	 */
-	public function offsetGet( $offset ): mixed
+	public function offsetGet( $offset )
 	{
 		return isset( $this->param[ $offset ] )
 			? $this->param[ $offset ]

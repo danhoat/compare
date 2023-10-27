@@ -170,8 +170,9 @@ jQuery( function ( $ ) {
 			date.setDate(1);
 			return date;
 		}
+
 		// カレントの日付を生成
-		const current = getFirstDay($unit.data( 'current' ));
+		const current = getFirstDay( $unit.data( 'current' ) );
 
 		$prev.on( 'click.prevMonth', async function ( event ) {
 			event.preventDefault();

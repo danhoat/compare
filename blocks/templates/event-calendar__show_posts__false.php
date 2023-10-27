@@ -76,13 +76,13 @@
   <div class="qms4__block__event-calendar__display">
     <div class="qms4__block__event-calendar__display-inner">
       <div class="qms4__block__event-calendar__display-header js__qms4__block__event-calendar__display-header">
-        <?php if (!empty($recent_enable_date)) : ?>
+        <?php if ( ! empty( $recent_enable_date ) ) { ?>
           <?= wp_date( 'n月j日（D）', $recent_enable_date->date()->getTimestamp() ) ?>のイベント
-        <?php endif; ?>
+        <?php } ?>
       </div>
       <!-- /.qms4__block__event-calendar__display-header -->
       <div class="qms4__block__event-calendar__display-list js__qms4__block__event-calendar__display-list">
-        <?php if (!empty($recent_enable_date)) : ?>
+        <?php if ( ! empty( $recent_enable_date ) ) { ?>
           <?php foreach ( $recent_enable_date->schedules() as $schedule ) { ?>
             <div class="qms4__block__event-calendar__display-list-item">
               <a href="<?= $schedule->permalink ?>?ymd=<?= $schedule->date( 'Ymd' ) ?>">
@@ -125,7 +125,7 @@
             </div>
             <!-- /.qms4__block__event-calendar__display-list-item -->
           <?php } ?>
-        <?php endif; ?>
+        <?php } ?>
       </div>
     </div>
     <!-- /.qms4__block__event-calendar__display-inner -->

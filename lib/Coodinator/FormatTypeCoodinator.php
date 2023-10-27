@@ -25,8 +25,7 @@ class FormatTypeCoodinator
 	 */
 	public function post_title(): string
 	{
-        //改行タグ削除処理 2023-08-31 kumamoto
-		return strip_tags(get_the_title());
+		return get_the_title();
 	}
 
 	/**

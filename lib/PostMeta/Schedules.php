@@ -106,17 +106,12 @@ class Schedules
 
 		$items = array();
 		foreach ( $schedules as $schedule ) {
-
-            //改行タグ削除処理 2023-08-31 kumamoto
-            $title_replaced = strip_tags($schedule->title);
-            $title_replaced = htmlspecialchars($title_replaced);
-
 			$items[] = array(
 				'post_id' => $schedule->schedule_id,
 				'active' => $schedule->active,
 				'date' => $schedule->date_str,
 				'overwrite' => $schedule->overwrite,
-				'title' => $title_replaced,
+				'title' => $schedule->title,
 				'timetable' => $schedule->timetable->to_array(),
 			);
 		}
